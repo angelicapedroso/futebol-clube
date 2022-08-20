@@ -32,4 +32,9 @@ User.init({
     type: STRING,
     allowNull: false,
   },
-}, { sequelize: db, underscored: true });
+}, {
+  sequelize: db,
+  underscored: true,
+  timestamps: false,
+  tableName: 'users',
+});
