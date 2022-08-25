@@ -9,9 +9,9 @@ const AuthService = {
   async login(data: ILogin): Promise<object> {
     const { email, password } = data;
     if (!email || !password) throw new HttpException(400, 'All fields must be filled');
-    const user = await User.findOne({ where: { email } });
-    const isPasswordMatching = await bcrypt.compare(password, user?.password as string);
-    if (!isPasswordMatching) throw new HttpException(401, 'Credenciais inválidas');
+    const user = await User.findOne({ raw: true, where: { email } });
+    const isPasswordMatching = await bcrypt.compare(password, user?.password || '');
+    if (!user || !isPasswordMatching) throw new HttpException(401, 'Incorrect email or password');
     const token = generateTokenJWT(email);
     return { token };
   },
