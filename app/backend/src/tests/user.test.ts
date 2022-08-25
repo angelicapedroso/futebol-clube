@@ -51,5 +51,17 @@ describe("Testes de integração - Seção 1: Users e Login", () => {
         .expect(response.body)
         .to.have.property("message", "All fields must be filled");
     });
+
+    it("Deve retornar status 401 e uma mensagem de erro com o email ou senha inválido", async () => {
+      const response = await chai
+        .request(app)
+        .post("/login")
+        .send(mock.loginWithInvalidEmailAndPassword);
+
+      chai.expect(response.status).to.be.equal(401);
+      chai
+        .expect(response.body)
+        .to.have.property("message", "Incorrect email or password");
+    });
   });
 });

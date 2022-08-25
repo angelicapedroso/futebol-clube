@@ -9,9 +9,14 @@ export const loginSend = {
 }
 
 export const loginWithoutEmail = {
-  password: '123456',
+  password: 'secret_admin',
 }
 
 export const loginWithoutPassword = {
   email: 'email@email.com',
+}
+
+export const loginWithInvalidEmailAndPassword = {
+  email: 'invalid@email.com',
+  password: '123456',
 }
