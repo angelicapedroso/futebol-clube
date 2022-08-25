@@ -7,3 +7,11 @@ export const loginSend = {
   email: 'email@email.com',
   password: 'secret_admin',
 }
+
+export const loginWithoutEmail = {
+  password: '123456',
+}
+
+export const loginWithoutPassword = {
+  email: 'email@email.com',
+}
