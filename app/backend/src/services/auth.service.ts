@@ -8,6 +8,7 @@ const AuthService = {
 
   async login(data: ILogin): Promise<object> {
     const { email, password } = data;
+    if (!email || !password) throw new HttpException(400, 'All fields must be filled');
     const user = await User.findOne({ where: { email } });
     const isPasswordMatching = await bcrypt.compare(password, user?.password as string);
     if (!isPasswordMatching) throw new HttpException(401, 'Credenciais inválidas');
