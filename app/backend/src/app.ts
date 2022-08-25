@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import 'express-async-errors';
 import httpErrorMiddleware from './middleware/http.error.middleware';
+import authRoutes from './routes/auth.routes';
 
 class App {
   public app: express.Express;
@@ -26,6 +27,8 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
     this.app.use(cors());
+
+    this.app.use('/login', authRoutes);
 
     this.app.use(httpErrorMiddleware);
   }
