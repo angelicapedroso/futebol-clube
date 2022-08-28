@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import 'express-async-errors';
 import httpErrorMiddleware from './middleware/http.error.middleware';
 import authRoutes from './routes/auth.routes';
+import teamRoutes from './routes/team.routes';
 
 class App {
   public app: express.Express;
@@ -29,6 +30,7 @@ class App {
     this.app.use(cors());
 
     this.app.use('/login', authRoutes);
+    this.app.use('/teams', teamRoutes);
 
     this.app.use(httpErrorMiddleware);
   }
