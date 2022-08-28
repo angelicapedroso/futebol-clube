@@ -10,24 +10,48 @@ chai.use(chaiHttp);
 
 describe("Testes de integração - Seção 2: Teams", () => {
   describe("endpoint /teams", () => {
-    beforeEach(() => {
-      Sinon.stub(Team, "findAll").resolves([mock.teamMock as Team]);
+    describe("getAll", () => {
+      beforeEach(() => {
+        Sinon.stub(Team, "findAll").resolves([mock.teamMock as Team]);
+      });
+
+      afterEach(() => {
+        Sinon.restore();
+      });
+
+      it("Deve retornar status 200 e um array com os times", async () => {
+        const response = await chai
+          .request(app)
+          .get("/teams")
+
+        const [team] = response.body;
+
+        chai.expect(response.status).to.be.equal(200);
+        chai.expect(team.id).to.equal(mock.teamMock.id);
+        chai.expect(team.teamName).to.equal(mock.teamMock.teamName);
+      });
     });
 
-    afterEach(() => {
-      Sinon.restore();
-    });
+    describe("getById", () => {
+      beforeEach(() => {
+        Sinon.stub(Team, "findOne").resolves(mock.teamMock as Team);
+      });
 
-    it("Deve retornar status 200 e um array com os times", async () => {
-      const response = await chai
-        .request(app)
-        .get("/teams")
+      afterEach(() => {
+        Sinon.restore();
+      });
 
-      const [team] = response.body;
+      it("Deve retornar status 200 e um time", async () => {
+        const response = await chai
+          .request(app)
+          .get("/teams/1")
 
-      chai.expect(response.status).to.be.equal(200);
-      chai.expect(team.id).to.equal(mock.teamMock.id);
-      chai.expect(team.teamName).to.equal(mock.teamMock.teamName);
+        const team = response.body;
+
+        chai.expect(response.status).to.be.equal(200);
+        chai.expect(team.id).to.equal(mock.teamMock.id);
+        chai.expect(team.teamName).to.equal(mock.teamMock.teamName);
+      });
     });
   });
 });
