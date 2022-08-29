@@ -17,6 +17,11 @@ const MatchService = {
     });
     return matches;
   },
+
+  async create(match: IMatch): Promise<IMatch> {
+    const createdMatch = await Match.create(match);
+    return createdMatch;
+  },
 };
 
 export default MatchService;

@@ -10,5 +10,5 @@ export const checkEmptyLogin = (data: ILogin): void => {
 export const checkCorrectLogin = (user: string | null, matchPassword: boolean): void => {
   if (!user || !matchPassword) {
     throw new HttpException(401, 'Incorrect email or password');
-  };
+  }
 };
