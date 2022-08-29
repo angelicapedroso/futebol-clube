@@ -1,6 +1,7 @@
 import Team from '../database/models/Team';
 import Match from '../database/models/Match';
 import IMatch from '../interfaces/match.interface';
+import HttpException from '../share/http.exception';
 
 const MatchService = {
   async getAll(): Promise<IMatch[]> {
@@ -20,6 +21,11 @@ const MatchService = {
 
   async create(match: IMatch): Promise<IMatch> {
     const createdMatch = await Match.create(match);
+
+    if (match.homeTeam === match.awayTeam) {
+      throw new HttpException(401, 'It is not possible to create a match with two equal teams');
+    }
+
     return createdMatch;
   },
 
