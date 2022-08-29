@@ -13,6 +13,11 @@ const MatchController = {
     const match = await MatchService.create(req.body);
     return res.status(201).json(match);
   },
+
+  async updateStatus(req: Request, res: Response): Promise<Response> {
+    await MatchService.updateStatus(Number(req.params.id));
+    return res.status(200).json({ message: 'Finished' });
+  },
 };
 
 export default MatchController;

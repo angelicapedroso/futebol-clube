@@ -22,6 +22,14 @@ const MatchService = {
     const createdMatch = await Match.create(match);
     return createdMatch;
   },
+
+  async updateStatus(id: number) {
+    const updatedMatch = await Match.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    return updatedMatch;
+  },
 };
 
 export default MatchService;
