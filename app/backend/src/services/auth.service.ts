@@ -18,7 +18,7 @@ const AuthService = {
   async loginValidate(token: string): Promise<object> {
     const decoded = verifyTokenJWT(token);
     const user = await User.findOne({ raw: true, where: { email: decoded } });
-    if (!user) throw new HttpException(401, 'Invalid token');
+    if (!user) throw new HttpException(401, 'Token must be a valid token');
     return { role: user.role };
   },
 };
