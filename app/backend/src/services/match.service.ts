@@ -20,11 +20,18 @@ const MatchService = {
   },
 
   async create(match: IMatch): Promise<IMatch> {
-    const createdMatch = await Match.create(match);
-
     if (match.homeTeam === match.awayTeam) {
       throw new HttpException(401, 'It is not possible to create a match with two equal teams');
     }
+
+    const homeTeam = await Team.findByPk(match.homeTeam);
+    const awayTeam = await Team.findByPk(match.awayTeam);
+
+    if (!homeTeam || !awayTeam) {
+      throw new HttpException(404, 'There is no team with such id!');
+    }
+
+    const createdMatch = await Match.create(match);
 
     return createdMatch;
   },
