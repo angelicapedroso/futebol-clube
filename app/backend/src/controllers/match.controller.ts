@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-// import AuthService from '../services/auth.service';
 import MatchService from '../services/match.service';
 
 const MatchController = {
@@ -9,7 +8,6 @@ const MatchController = {
   },
 
   async create(req: Request, res: Response): Promise<Response> {
-    // await AuthService.loginValidate(req.headers.authorization as string);
     const match = await MatchService.create(req.body);
     return res.status(201).json(match);
   },
@@ -17,6 +15,11 @@ const MatchController = {
   async updateStatus(req: Request, res: Response): Promise<Response> {
     await MatchService.updateStatus(Number(req.params.id));
     return res.status(200).json({ message: 'Finished' });
+  },
+
+  async updateGoals(req: Request, res: Response): Promise<Response> {
+    await MatchService.updateGoals(Number(req.params.id), req.body);
+    return res.status(200).json({ message: 'Goals updated' });
   },
 };
 

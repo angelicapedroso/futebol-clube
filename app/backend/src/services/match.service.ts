@@ -1,6 +1,6 @@
 import Team from '../database/models/Team';
 import Match from '../database/models/Match';
-import IMatch from '../interfaces/match.interface';
+import IMatch, { IMatchGoals } from '../interfaces/match.interface';
 import HttpException from '../share/http.exception';
 
 const MatchService = {
@@ -36,12 +36,17 @@ const MatchService = {
     return createdMatch;
   },
 
-  async updateStatus(id: number) {
+  async updateStatus(id: number): Promise<[number, IMatch[]]> {
     const updatedMatch = await Match.update(
       { inProgress: false },
       { where: { id } },
     );
     return updatedMatch;
+  },
+
+  async updateGoals(id: number, goals: IMatchGoals): Promise<[number, IMatchGoals[]]> {
+    const updatedGoals = await Match.update(goals, { where: { id } });
+    return updatedGoals;
   },
 };
 
